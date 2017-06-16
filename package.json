@@ -1,5 +1,5 @@
 {
-  "name": "node-koa-airbrake",
+  "name": "koa-airbrake",
   "version": "0.8.0-alpha.1",
   "description": "Airbrake middleware for Koa",
   "main": "src/index.js",
