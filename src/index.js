@@ -14,11 +14,20 @@ function notifyAirbrake(airbrake, options = {}) {
       err.params = req.body;
       err.session = req.session;
       err.ua = req.headers['User-Agent'];
-
       airbrake.notify(err);
       throw err;
     });
   }
 }
 
-module.exports = exports = notifyAirbrake;
+function addAirbrakeFilter(airbrake, filterFn) {
+  return async function(ctx, next) {
+    airbrake.addFilter(filterFn);
+    await next();
+  }
+}
+
+module.exports = exports = {
+  notifyAirbrake,
+  addAirbrakeFilter
+}
