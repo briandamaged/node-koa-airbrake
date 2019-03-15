@@ -20,8 +20,9 @@
     "url": "https://github.com/briandamaged/node-koa-airbrake/issues"
   },
   "peerDependencies": {
-    "airbrake": "2.x",
+    "airbrake-js": "^1.6.5",
     "koa": "2.x"
   },
-  "homepage": "https://github.com/briandamaged/node-koa-airbrake#readme"
+  "homepage": "https://github.com/briandamaged/node-koa-airbrake#readme",
+  "dependencies": {}
 }
