@@ -23,6 +23,5 @@
     "airbrake-js": "^1.6.5",
     "koa": "2.x"
   },
-  "homepage": "https://github.com/briandamaged/node-koa-airbrake#readme",
-  "dependencies": {}
+  "homepage": "https://github.com/briandamaged/node-koa-airbrake#readme"
 }
