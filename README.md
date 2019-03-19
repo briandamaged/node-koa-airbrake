@@ -19,7 +19,11 @@ const app = new Koa();
 
 
 // Setup your Airbrake client...
-const airbrake = require('airbrake').createClient("PROJECT_ID", "API_KEY");
+const AirbrakeClient = require('airbrake-js');
+const airbrake = new AirbrakeClient({  
+  projectId: "PROJECT_ID",
+  projectKey: 'API_KEY'
+});
 
 
 // Plugin the "koa-airbrake" middleware
@@ -58,4 +62,3 @@ Since the exception is never passed to the `reject` callback, it escapes Koa's c
 // This will intercept any exceptions that escape Koa's callstack.
 airbrake.handleExceptions();
 ```
-
