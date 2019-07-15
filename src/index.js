@@ -15,6 +15,18 @@ function notifyAirbrake(airbrake, options = {}) {
       err.session = req.session;
       err.ua = req.headers['User-Agent'];
 
+      err.environment = {};
+
+
+      //NOTE: The following conditional handle axios specific errors. Hmmm...
+      if(err.config) {
+        err.environment.config = err.config;
+      }
+
+      if(err.code) {
+        err.environment.code = err.code;
+      }
+     
       airbrake.notify(err);
       throw err;
     });
