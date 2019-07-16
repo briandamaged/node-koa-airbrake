@@ -5,26 +5,37 @@ function notifyAirbrake(airbrake, options = {}) {
   return function(ctx, next) {
     return next().catch((err)=> {
       const req = ctx.request;
-      const res = ctx.response;
+      
+      const notice = {};
 
+      notice.error = err;
+
+      // Some libraries like Axios directly annotate error object 
+      // with contextual info such as error code, req url. 
+      // Add these to `environment` field of the notice.
+      // These go in the `environment` and not in the `context` field
+      // because that's how we used to send notice to old Airbrake.
       const keys = Object.keys(err);
-      err.environment = {};
+      notice.environment = {};
       keys.forEach((key)=> {
-        err.environment[key] = err[key];
+        notice.environment[key] = err[key];
       });
 
-      err.url = req.url;
-      err.action = req.url;
-      err.component = err.component || defaultComponent;
-      err.httpMethod = req.method;
-      err.params = req.body;
-      err.session = req.session;
-      err.ua = req.headers['User-Agent'];
+      notice.context = {
+        url : req.url,
+        action : req.url,
+        component : err.component || defaultComponent,
+        httpMethod : req.method,
+        session : req.session,
+        ua : req.headers['User-Agent'] 
+      };
 
-      airbrake.notify(err);
+      notice.params = req.body;
+        
+      airbrake.notify(notice);
       throw err;
     });
-  }
+  };
 }
 
 module.exports = exports = notifyAirbrake;
